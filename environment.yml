@@ -69,4 +69,4 @@ dependencies:
   - pip
   - pip:
       - read-roi
-      - jupyterlab-materialdarker=0.8.0
+      - jupyterlab-materialdarker==0.8.0
