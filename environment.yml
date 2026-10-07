@@ -11,8 +11,9 @@ dependencies:
   - jupyterhub=5.*
   - jupyterhub-singleuser=5.*
   - batchspawner=1.3.*
-  - anywidget=0.9.*
+  - anywidget=0.11.*
   - ipywidgets
+  - jupyter-ai=3.2.*
 
   # 2. Core Data Science, I/O & Parallelization
   - numpy=1.26.*
@@ -68,4 +69,4 @@ dependencies:
   - pip
   - pip:
       - read-roi
-      - jupyterlab-materialdarker==0.8.0
+      - jupyterlab-materialdarker=0.8.0
