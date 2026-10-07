@@ -1,0 +1,17 @@
+#!/bin/bash
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# 1. Install Claude Code via NPM globally for the user context
+npm install -g @anthropic-ai/claude-code
+
+# 2. Install the Agent Client Protocol (ACP) adapter so Jupyter AI can communicate with it
+npm install -g @agentclientprotocol/claude-agent-acp
+
+# 3. Ensure the binaries are accessible in the user path
+export PATH="${HOME}/.npm-global/bin:${PATH}"
+
+# 4. Register the baked IPython kernel
+source /srv/conda/etc/profile.d/conda.sh
+conda activate notebook
+python -m ipykernel install --name "gerlich_env" --display-name "Python (Gerlich)" --sys-prefix
