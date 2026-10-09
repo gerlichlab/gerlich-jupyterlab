@@ -1,0 +1,61 @@
+name: gerlich_env
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # 1. Base Python & HPC Jupyter Server Infrastructure
+  - python=3.12.*
+  - ipykernel
+  - anywidget=0.11.*
+  - ipywidgets
+
+  # 2. Core Data Science, I/O & Parallelization
+  - numpy=1.26.*
+  - pandas=2.3.*
+  - scipy=1.17.*
+  - h5py
+  - pyarrow
+  - openpyxl
+  - numba=0.65.*
+  - sparse
+
+  # 3. Visualization Ecosystem & Dashboards
+  - matplotlib=3.11.*
+  - seaborn=0.13.*
+  - plotly
+  - bokeh
+  - panel=1.9.*
+  - holoviews=1.23.*
+  - ipympl
+  - pyviz_comms
+  - matplotlib-venn
+  - colormaps
+
+  # 4. Machine Learning, Stats & Utilities
+  - scikit-learn=1.8.*
+  - statsmodels=0.14.*
+  - umap-learn=0.5.*
+  - scikit-posthocs=0.16.*
+  - igraph=1.*
+  - python-igraph=1.*
+  - tqdm=4.70.*
+  - natsort=8.4.*
+  - more-itertools=11.1.*
+
+  # 5. Imaging / Chromatin Tracing
+  - scikit-image=0.26.*
+  - tifffile=2024.5.*
+  - pillow=12.*
+  - read-roi=1.6.0
+
+  # 6. Bioinformatics: General & ChIP-seq Downstream
+  - biopython=1.88
+  - pysam=0.23.*
+  - pybbi=0.4.2
+  - pybigtools=0.3.0
+  - bioframe=0.8.0
+
+  # 7. Bioinformatics: 3D Genomics & Hi-C
+  - cooler=0.10.4
+  - cooltools=0.7.1
+  - pairtools=1.1.3

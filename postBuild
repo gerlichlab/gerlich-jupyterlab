@@ -11,7 +11,6 @@ npm install -g @agentclientprotocol/claude-agent-acp
 # 3. Ensure the binaries are accessible in the user path
 export PATH="${HOME}/.npm-global/bin:${PATH}"
 
-# 4. Register the baked IPython kernel
+# 4. Add Gerlich env
 source /srv/conda/etc/profile.d/conda.sh
-conda activate notebook
-python -m ipykernel install --name "gerlich_env" --display-name "Python (Gerlich)" --sys-prefix
+conda env create -f gerlich_env.yml -y
