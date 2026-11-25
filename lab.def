@@ -1,0 +1,17 @@
+Bootstrap: localimage
+From: frontend.sif
+
+%files
+    lab.yml /opt/lab.yml
+
+%post
+    /opt/conda/bin/conda env create -p /opt/lab-env -f /opt/lab.yml
+    /opt/conda/bin/conda clean --all -y
+    /opt/conda/bin/conda list -p /opt/lab-env --explicit > /opt/lab-env/lock.txt
+
+    # Show the lab env as the "Lab env" kernel
+    /opt/lab-env/bin/python -m ipykernel install --prefix /opt/jupyter \
+        --name lab-env --display-name "Lab env"
+
+%test
+    /opt/lab-env/bin/python -c "import ipykernel"

@@ -1,13 +1,17 @@
-name: gerlich_env
+name: lab
 channels:
   - conda-forge
   - bioconda
 dependencies:
-  # 1. Base Python & HPC Jupyter Server Infrastructure
+  # 1. Base Python and Jupyter kernel
   - python=3.12.*
   - ipykernel
+
+  # Widgets. Keep these the same as in frontend.yml
+  - ipywidgets=8.*
   - anywidget=0.11.*
-  - ipywidgets
+  - ipympl=0.10.*
+  - pyviz_comms=3.*
 
   # 2. Core Data Science, I/O & Parallelization
   - numpy=1.26.*
@@ -26,8 +30,6 @@ dependencies:
   - bokeh
   - panel=1.9.*
   - holoviews=1.23.*
-  - ipympl
-  - pyviz_comms
   - matplotlib-venn
   - colormaps
 

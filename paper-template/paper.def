@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: condaforge/miniforge3:26.9.4-2
+
+%files
+    paper.yml /opt/paper.yml
+
+%post
+    /opt/conda/bin/conda env create -p /opt/env -f /opt/paper.yml
+    /opt/conda/bin/conda clean --all -y
+    /opt/conda/bin/conda list -p /opt/env --explicit > /opt/env/lock.txt
+    # The image's own kernel, with a name that can't clash with users' kernels
+    /opt/env/bin/python -m ipykernel install --prefix /opt/env \
+        --name image-python --display-name "Python (this image)"
+
+%environment
+    export PATH=/opt/env/bin:$PATH
+    export PYTHONNOUSERSITE=1
+
+%test
+    jupyter lab --version

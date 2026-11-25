@@ -1,0 +1,24 @@
+Bootstrap: docker
+From: condaforge/miniforge3:26.9.4-2
+
+%files
+    frontend.yml /opt/frontend.yml
+
+%post
+    /opt/conda/bin/conda env create -p /opt/jupyter -f /opt/frontend.yml
+    /opt/conda/bin/conda clean --all -y
+    /opt/conda/bin/conda list -p /opt/jupyter --explicit > /opt/jupyter/lock.txt
+
+    # Claude Code for Jupyter AI (the @Claude agent)
+    export PATH=/opt/jupyter/bin:$PATH
+    npm install -g --prefix /opt/claude --cache /tmp/npm-cache \
+        @agentclientprotocol/claude-agent-acp@0.106.0
+    rm -rf /tmp/npm-cache
+
+%environment
+    export PATH=/opt/claude/bin:/opt/jupyter/bin:$PATH
+    export PYTHONNOUSERSITE=1
+
+%test
+    jupyter labextension list
+    command -v claude-agent-acp

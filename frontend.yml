@@ -1,0 +1,19 @@
+name: frontend
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - jupyterlab=4.6.4
+  - jupyter-ai=3.2.*
+  # Widget support. The lab env and other kernels need the same versions.
+  - ipywidgets=8.*
+  - anywidget=0.11.*
+  - ipympl=0.10.*
+  - pyviz_comms=3.*
+  # Optional: lets users add container kernels
+  - apptainer=1.5.*
+  # Runs Claude Code (needs Node 22 or newer)
+  - nodejs=24.*
+  - pip
+  - pip:
+      - jupyterlab-materialdarker==0.8.0

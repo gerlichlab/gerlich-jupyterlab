@@ -1,0 +1,16 @@
+name: paper
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - jupyterlab=4.6.4
+  - ipykernel
+  - ipywidgets=8.*
+  - anywidget=0.11.*
+  - ipympl=0.10.*
+  # Optional: lets the image start users' container kernels
+  - apptainer=1.5.*
+  # The paper's packages, with exact versions
+  - matplotlib
+  - bokeh
+  - holoviews
