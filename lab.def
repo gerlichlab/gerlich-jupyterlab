@@ -5,13 +5,13 @@ From: frontend.sif
     lab.yml /opt/lab.yml
 
 %post
-    /opt/conda/bin/conda env create -p /opt/lab-env -f /opt/lab.yml
+    /opt/conda/bin/conda env create -n lab -f /opt/lab.yml
     /opt/conda/bin/conda clean --all -y
-    /opt/conda/bin/conda list -p /opt/lab-env --explicit > /opt/lab-env/lock.txt
+    /opt/conda/bin/conda list -n lab --explicit > /opt/conda/envs/lab/lock.txt
 
     # Show the lab env as the "Lab env" kernel
-    /opt/lab-env/bin/python -m ipykernel install --prefix /opt/jupyter \
+    /opt/conda/envs/lab/bin/python -m ipykernel install --prefix /opt/jupyter \
         --name lab-env --display-name "Lab env"
 
 %test
-    /opt/lab-env/bin/python -c "import ipykernel"
+    /opt/conda/envs/lab/bin/python -c "import ipykernel"

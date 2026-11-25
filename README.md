@@ -30,7 +30,7 @@ Save what's in each image to git:
 
 ```bash
 apptainer exec frontend.sif cat /opt/jupyter/lock.txt > frontend-lock.txt
-apptainer exec lab.sif cat /opt/lab-env/lock.txt > lab-lock.txt
+apptainer exec lab.sif cat /opt/conda/envs/lab/lock.txt > lab-lock.txt
 ```
 
 These lists hold the exact version of every package. If you ever need an exact copy
