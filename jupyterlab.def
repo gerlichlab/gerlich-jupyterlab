@@ -2,17 +2,18 @@ Bootstrap: docker
 From: condaforge/miniforge3:26.9.4-2
 
 %files
-    frontend.yml /opt/frontend.yml
+    jupyterlab.yml /opt/jupyterlab.yml
 
 %post
-    /opt/conda/bin/conda env create -p /opt/jupyter -f /opt/frontend.yml
+    /opt/conda/bin/conda env create -p /opt/jupyter -f /opt/jupyterlab.yml
     /opt/conda/bin/conda clean --all -y
     /opt/conda/bin/conda list -p /opt/jupyter --explicit > /opt/jupyter/lock.txt
 
-    # Claude Code for Jupyter AI (the @Claude agent)
+    # Claude Code: the adapter for Jupyter AI (@Claude) and `claude` for terminals
     export PATH=/opt/jupyter/bin:$PATH
     npm install -g --prefix /opt/claude --cache /tmp/npm-cache \
-        @agentclientprotocol/claude-agent-acp@0.106.0
+        @agentclientprotocol/claude-agent-acp@0.106.0 \
+        @anthropic-ai/claude-code@2.1.331
     rm -rf /tmp/npm-cache
 
 %environment
@@ -24,3 +25,4 @@ From: condaforge/miniforge3:26.9.4-2
 %test
     jupyter labextension list
     command -v claude-agent-acp
+    claude --version

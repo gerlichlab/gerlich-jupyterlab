@@ -1,0 +1,18 @@
+Bootstrap: localimage
+From: jupyterlab.sif
+
+%files
+    gerlich.yml /opt/gerlich.yml
+
+%post
+    /opt/conda/bin/conda env create -n gerlich -f /opt/gerlich.yml
+    /opt/conda/bin/conda clean --all -y
+    /opt/conda/bin/conda list -n gerlich --explicit > /opt/conda/envs/gerlich/lock.txt
+
+    # Show the gerlich env as the "Python (gerlich)" kernel
+    /opt/conda/envs/gerlich/bin/python -m ipykernel install --prefix /opt/jupyter \
+        --name gerlich --display-name "Python (gerlich)" \
+        --env PATH '/opt/conda/envs/gerlich/bin:${PATH}'
+
+%test
+    /opt/conda/envs/gerlich/bin/python -c "import ipykernel"
