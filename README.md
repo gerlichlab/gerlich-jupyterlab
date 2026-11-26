@@ -42,6 +42,31 @@ Start the custom JupyterLab app in OpenOnDemand and give it the path to `lab-<da
 Pick the "Lab env" kernel for your notebooks. The "Python 3" kernel only has
 JupyterLab itself in it, not the lab packages.
 
+## Command-line tools
+
+The lab env's command-line tools also work outside JupyterLab, for example in
+sbatch scripts. One tool:
+
+```bash
+apptainer exec lab.sif conda run -s -n lab cooler info file.cool
+```
+
+Always add `-s`: without it, pipes and live output don't work.
+
+Several commands in one go:
+
+```bash
+apptainer exec lab.sif bash <<'EOF'
+set -e
+source /opt/conda/bin/activate lab
+cooler info file.cool
+pairtools sort in.pairs.gz -o out.pairs.gz
+EOF
+```
+
+Inside `<<'EOF'`, only exported variables (like `$SLURM_CPUS_PER_TASK`) are known.
+Write `<<EOF` instead to fill in the script's own variables first.
+
 ## Use Claude
 
 Open the Jupyter AI chat in JupyterLab and write `@Claude`.
