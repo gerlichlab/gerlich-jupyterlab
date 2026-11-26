@@ -42,12 +42,19 @@ Start the custom JupyterLab app in OpenOnDemand and give it the path to `lab-<da
 Pick the "Lab env" kernel for your notebooks. The "Python 3" kernel only has
 JupyterLab itself in it, not the lab packages.
 
+GPUs are not tested yet, and the lab env has no GPU packages.
+
 ## Command-line tools
 
-The lab env's command-line tools also work outside JupyterLab, for example in
-sbatch scripts. One tool:
+The lab env's command-line tools also work outside JupyterLab, in Slurm jobs.
+An sbatch script that runs one tool:
 
 ```bash
+#!/usr/bin/env bash
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+
 apptainer exec lab.sif conda run -s -n lab cooler info file.cool
 ```
 
@@ -67,6 +74,12 @@ EOF
 Inside `<<'EOF'`, only exported variables (like `$SLURM_CPUS_PER_TASK`) are known.
 Write `<<EOF` instead to fill in the script's own variables first.
 
+The container sees the cluster's storage at the usual paths (`/groups`, `/scratch`,
+`/resources`), so no `--bind` is needed. On GPU nodes, add `--nv`.
+
+In "Lab env" notebooks, the tools work directly in cells: `!cooler --help`, or a
+`%%bash` cell.
+
 ## Use Claude
 
 Open the Jupyter AI chat in JupyterLab and write `@Claude`.
@@ -80,17 +93,24 @@ check that first.
 
 ## Your own environments
 
-Build a conda or uv environment in your home or your own folder, install `ipykernel`
-in it, activate it, and run:
+Install `ipykernel` into your conda environment and register it once, as described in
+"Add a custom Jupyter kernel" in the
+[OpenOnDemand docs](https://docs.vbc.ac.at/research-computing/cbe/openondemand-web-applications/):
 
 ```bash
-python -m ipykernel install --user --name my-env
+conda install -n my-env ipykernel
+conda run -n my-env python -m ipykernel install --user --name my-env --display-name "Python (my-env)"
 ```
 
-It shows up as a kernel next to "Lab env". Track the environment's files in git, so
-you can rebuild it (see the cluster's Python guide).
+It shows up as "Python (my-env)" next to "Lab env" (see the
+[Python and conda docs](https://docs.vbc.ac.at/research-computing/cbe/python-and-conda/)).
 
-Container kernels also work: see "Jupyter kernels" in the cluster's container docs.
+To use the environment's command-line tools with `!` or `%%bash` in a notebook, run
+this in the first cell:
+
+```python
+import os, sys; os.environ["PATH"] = os.path.dirname(sys.executable) + ":" + os.environ["PATH"]
+```
 
 ## Images for papers
 

@@ -18,6 +18,8 @@ From: condaforge/miniforge3:26.9.4-2
 %environment
     export PATH=/opt/claude/bin:/opt/jupyter/bin:$PATH
     export PYTHONNOUSERSITE=1
+    # JupyterLab terminals use $SHELL; the OOD app's --cleanenv removes it
+    export SHELL=/bin/bash
 
 %test
     jupyter labextension list
